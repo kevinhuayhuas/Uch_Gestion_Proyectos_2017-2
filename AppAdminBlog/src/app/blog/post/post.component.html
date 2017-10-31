@@ -1,0 +1,8 @@
+<a  [routerLink]="['/blog/nuevo-post']"><button type="button" class="btn btn-outline-primary"> Crear Post</button></a>
+
+<br><br>
+<input type="email" class="form-control mb-3" placeholder="Escriba para filtrar la columna de titulo..." required (keyup)='updateFilter($event)'>
+
+<ngx-datatable [columns]="columns" [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [rowHeight]="'auto'" (activate)="onActivate($event)"
+    [limit]="10" [rows]='rows'>
+</ngx-datatable>

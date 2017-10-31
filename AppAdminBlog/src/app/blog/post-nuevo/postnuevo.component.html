@@ -1,0 +1,210 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                (*) Campos obligatorios.
+            </div>
+            <div class="card-block">
+                <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+                    <div class="form-group row">
+                        <label for="titulo" class="col-2 col-form-label">Titulo(*)</label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" id="titulo" name="titulo" ngModel>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="descripcion" class="col-2 col-form-label">Descripcion</label>
+                        <div class="col-10">
+                            <div class="toolbar" id="toolbar-toolbar">
+                                <span class="ql-formats">
+                                    <select class="ql-font">
+                                        <option selected=""></option>
+                                        <option value="serif"></option>
+                                        <option value="monospace"></option>
+                                    </select>
+                                    <select class="ql-size">
+                                        <option value="small"></option>
+                                        <option selected=""></option>
+                                        <option value="large"></option>
+                                        <option value="huge"></option>
+                                    </select>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                    <button class="ql-strike"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <select class="ql-color"></select>
+                                    <select class="ql-background"></select>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-list" value="ordered"></button>
+                                    <button class="ql-list" value="bullet"></button>
+                                    <select class="ql-align">
+                                        <option selected=""></option>
+                                        <option value="center"></option>
+                                        <option value="right"></option>
+                                        <option value="justify"></option>
+                                    </select>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-link"></button>
+                                    <button class="ql-image"></button>
+                                </span>
+                            </div>
+                            <div id="editor-container">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="autor" class="col-2 col-form-label">Autor(*)</label>
+                        <div class="col-10">
+                            <select class="form-control" id="autor" name="autor" ngModel>
+                                <option *ngFor="let usuario of usuarios" value="{{usuario?.id}}">{{usuario?.usu_nombre}} {{usuario?.usu_apaterno}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="blog" class="col-2 col-form-label">Blog(*)</label>
+                        <div class="col-10">
+                            <select class="form-control" id="blog" name="blog" ngModel>
+                                <option *ngFor="let blog of blogs" value="{{blog?.id}}">{{blog?.blg_titulo}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="tags" class="col-2 col-form-label">Tags</label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" id="tags" name="tags" ngModel>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="tags" class="col-2 col-form-label">Imagenes</label>
+                        <div class="col-md-10">
+                            <!--
+                            Multiple
+                            <label class="custom-file mb-3">
+                                <input type="file" ng2FileSelect [uploader]="uploader" multiple class="custom-file-input">
+                                <span class="custom-file-control"></span>
+                            </label>
+                            -->
+
+                            <label class="custom-file">
+                                <input type="file" ng2FileSelect [uploader]="uploader" class="custom-file-input" >
+                                <span class="custom-file-control"></span>
+                            </label>
+
+                            <!--<p>Numero de imagenes: {{ uploader?.queue?.length }}</p> -->
+                            <br>
+                            <br>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">Nombre</th>
+                                        <th>Tamaño</th>
+                                        <th>Progreso</th>
+                                        <th>Estado</th>
+                                        <th>Comportamiento</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of uploader.queue">
+                                        <td>
+                                            <strong>{{ item?.file?.name }}</strong>
+                                            <strong>{{ item?.file?.lastModifiedDate }}</strong>
+                                        </td>
+                                        <td>{{ item?.file?.size/1024/1024 | number:'1.2' }} MB</td>
+                                        <td>
+                                            <div class="progress" style="margin-bottom: 0;">
+                                                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item.isSuccess">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </span>
+                                            <span *ngIf="item.isCancel">
+                                                <i class="fa fa-ban" aria-hidden="true"></i>
+                                            </span>
+                                            <span *ngIf="item.isError">
+                                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                            </span>
+                                        </td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-success btn-sm" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                                <span class="glyphicon glyphicon-upload"></span> Subir
+                                            </button>
+                                            <button type="button" class="btn btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
+                                                <span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()">
+                                                <span class="glyphicon glyphicon-trash"></span> Remover
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div>
+                                <p>Progreso:
+                                    <ngb-progressbar type="primary" [value]="uploader.progress"></ngb-progressbar>
+                                </p>
+                                <button type="button" class="btn btn-success" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                    <span class="glyphicon glyphicon-upload"></span> Subir todo
+                                </button>
+                                <button type="button" class="btn btn-warning" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancelar todo
+                                </button>
+                                <button type="button" class="btn btn-danger" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                    <span class="glyphicon glyphicon-trash"></span> Remover todo
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="estado" class="col-2 col-form-label">Estado(*)</label>
+                        <div class="col-10">
+                            <select class="form-control" id="estado" name="estado" ngModel>
+                                <option value="1">Publico</option>
+                                <option value="2">Privado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row ">
+                        <div class="col-12 text-right">
+                            <button type="reset" class="btn btn-outline-warning">Limpiar</button>
+                            <button type="submit" class="btn btn-outline-primary">Crear</button>
+                        </div>
+                    </div>
+                </form>
+                <div *ngIf="estadoRegistro != false">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Se creo un nuevo POST</strong>.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="cerrarAlert()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="estadoError != false">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Debes completar el campo Nombre</strong>.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="cerrarError()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
