@@ -1,0 +1,21 @@
+Informe		-> Cap. desarrollo de la solucion
+Inicio		-> Acta de constitucion
+Planificacion	-> Enunciado de Alcanse
+		-> EDT
+		-> Diccionario EDT
+		-> Matriz de Trazabilidad de requisitos
+		-> Cronograma de Proyecto
+		-> Valor ganado al 06/11
+		
+HOJA DE VERIFICACION
+-Perfil, capacitaciones,Recompenzas
+-Matriz de Comunicaciones
+
+INGENIERIA DE PRODUCTO
+- Diagrama de casos de uso
+- Modelo fisico de DB
+- Imagenes de prueba del software
+
+ENTREGA DIGITAL
+Enviar al correo, en un solo documento digital el 07/11 hasta las 6:30pm
+
